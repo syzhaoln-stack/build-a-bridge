@@ -5,5 +5,6 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')setNav(false)});
 const here=location.pathname.split('/').pop();nav?.querySelectorAll('a').forEach(a=>{if(a.getAttribute('href')===here)a.classList.add('active')});
 const heading=document.querySelector('.article>h1');if(heading)document.title=`${heading.textContent}｜请把手弄脏`;
 const number=Number.parseInt(here,10),prev=document.querySelector('#prev-chapter'),next=document.querySelector('#next-chapter');
+const partClass=number<=3?'part-beam':number<=6?'part-arch':number<=9?'part-cable':number<=12?'part-suspension':'part-composite';body.classList.add(partClass);
 if(number>1){prev.href=`${String(number-1).padStart(2,'0')}.html`;prev.textContent='← 上一章';prev.hidden=false}
 if(number<15){next.href=`${String(number+1).padStart(2,'0')}.html`;next.textContent='下一章 →';next.hidden=false}
