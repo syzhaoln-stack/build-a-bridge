@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>请把手弄脏 · AI时代的学与玩，或一座桥的哲学</title>
+<style>
+:root {
+  --ink: #1f2430;
+  --muted: #697186;
+  --line: #e5e8f0;
+  --blue: #5477c4;
+  --blue-soft: #eaf1fe;
+  --gold: #fff4c2;
+  --paper: #fcfcfd;
+  --red-soft: #fff0f0;
+  --bg: #f8f9fb;
+  --serif: "Noto Serif SC", "Source Han Serif SC", "Songti SC", Georgia, serif;
+  --sans: "Noto Sans SC", "Source Han Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --mono: "JetBrains Mono", "Source Code Pro", "Cascadia Code", Consolas, monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--serif); color: var(--ink); background: var(--bg); line-height: 1.88; font-size: 17px; }
+::selection { background: var(--gold); }
+
+/* ── Layout ── */
+#app { display: flex; min-height: 100vh; }
+#sidebar { width: 280px; background: white; border-right: 1px solid var(--line); padding: 32px 24px; position: fixed; top: 0; left: 0; bottom: 0; overflow-y: auto; z-index: 10; }
+#main { margin-left: 280px; flex: 1; padding: 48px 0 120px; }
+#content { width: min(720px, calc(100% - 80px)); margin: 0 auto; }
+
+/* ── Sidebar ── */
+#sidebar h2 { font-size: 18px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 6px; }
+#sidebar .subtitle { font-size: 13px; color: var(--muted); margin-bottom: 28px; line-height: 1.5; }
+#sidebar .part { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted); margin: 22px 0 8px; padding-top: 16px; border-top: 1px solid var(--line); }
+#sidebar .part:first-of-type { border-top: none; padding-top: 0; }
+#sidebar a { display: block; padding: 6px 10px; border-radius: 6px; font-size: 14px; color: var(--ink); text-decoration: none; transition: background .15s; margin: 1px -10px; }
+#sidebar a:hover { background: var(--blue-soft); }
+#sidebar a.active { background: var(--blue-soft); color: var(--blue); font-weight: 600; }
+#sidebar .status { display: inline-block; font-size: 10px; margin-left: 4px; padding: 1px 5px; border-radius: 3px; }
+#sidebar .status.done { background: #e5f5e5; color: #3a8; }
+#sidebar .status.wip { background: #fff3e0; color: #c80; }
+
+/* ── Typography ── */
+#content h1 { font-size: clamp(32px, 5vw, 48px); line-height: 1.18; letter-spacing: -1.5px; margin: 0 0 12px; font-family: var(--sans); }
+#content h2 { margin: 48px 0 16px; font-size: 26px; font-weight: 800; letter-spacing: -0.5px; font-family: var(--sans); }
+#content h3 { margin: 32px 0 10px; font-size: 20px; font-weight: 700; font-family: var(--sans); }
+#content p { margin: 12px 0; }
+#content strong { font-weight: 700; }
+#content a { color: var(--blue); text-decoration: none; border-bottom: 1px solid #cedffe; }
+#content a:hover { border-bottom-color: var(--blue); }
+
+/* ── Special blocks ── */
+.deck { color: var(--muted); font-size: 18px; max-width: 600px; margin-bottom: 24px; font-family: var(--sans); }
+blockquote { margin: 16px 0; padding: 12px 20px; border-left: 3px solid var(--blue); background: var(--blue-soft); border-radius: 0 8px 8px 0; font-size: 15px; }
+blockquote.tension { border-left-color: #b8a037; background: #fffaf0; }
+blockquote p { margin: 4px 0; }
+blockquote cite { display: block; margin-top: 8px; font-size: 13px; color: var(--muted); font-style: normal; }
+
+.scene { margin: 20px 0; padding: 20px 24px; background: #f4f5f8; border: 1px solid #dde; border-radius: 10px; font-family: var(--sans); font-size: 15px; }
+.scene .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted); margin-bottom: 12px; }
+.scene strong { color: var(--ink); }
+.scene .meta { font-size: 12px; color: var(--muted); margin-top: 12px; padding-top: 10px; border-top: 1px solid #dde; }
+.scene .meta a { font-size: 12px; }
+
+.insight { margin: 24px 0; padding: 20px 24px; background: var(--gold); border-radius: 10px; font-weight: 600; font-size: 16px; }
+.insight::before { content: "💡 "; }
+
+.shiyu { margin: 28px 0; padding: 20px 24px; background: var(--blue-soft); border-left: 4px solid var(--blue); border-radius: 0 10px 10px 0; font-size: 15px; font-style: italic; }
+.shiyu .label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; color: var(--blue); margin-bottom: 10px; font-style: normal; }
+
+.decision { margin: 32px 0; padding: 22px 24px; background: white; border: 2px solid var(--blue); border-radius: 12px; font-size: 15px; }
+.decision .label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; color: var(--blue); margin-bottom: 10px; }
+
+table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--line); }
+th { font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); }
+tr:last-child td { border-bottom: none; }
+
+code { background: #f2f4f8; padding: 2px 5px; border-radius: 4px; font-family: var(--mono); font-size: 0.9em; }
+pre { background: #f2f4f8; padding: 16px 20px; border-radius: 8px; overflow-x: auto; font-family: var(--mono); font-size: 14px; line-height: 1.5; margin: 16px 0; }
+
+.footnote { color: var(--muted); font-size: 13px; margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--line); }
+.next-chapter { text-align: right; margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+
+/* ── Cover page ── */
+.cover { text-align: center; padding: 80px 0 60px; }
+.cover h1 { font-size: clamp(40px, 7vw, 64px); margin-bottom: 12px; }
+.cover .sub { font-size: 24px; color: var(--muted); margin-bottom: 40px; font-family: var(--sans); }
+.cover .desc { font-size: 16px; color: var(--muted); max-width: 480px; margin: 0 auto 40px; line-height: 1.8; }
+.cover .btn { display: inline-block; padding: 12px 32px; background: var(--ink); color: white; border-radius: 8px; font-size: 15px; font-weight: 600; text-decoration: none; font-family: var(--sans); transition: background .2s; }
+.cover .btn:hover { background: #3a4050; }
+
+/* ── Responsive ── */
+@media (max-width: 860px) {
+  #sidebar { display: none; }
+  #main { margin-left: 0; }
+  #content { width: min(100% - 32px, 720px); }
+}
+</style>
+</head>
+<body>
+
+<div id="app">
+<nav id="sidebar">
+  <h2>请把手弄脏</h2>
+  <p class="subtitle">AI时代的学与玩，<br>或一座桥的哲学</p>
+
+  <a href="#cover" class="active">封面</a>
+  <a href="#preface">序言：在没人爱土木的时代，我给一座桥写了封情书</a>
+
+  <div class="part">梁桥 · 最朴素的跨越</div>
+  <a href="#ch1">第1章 机器学会了搭桥，但它不知道自己在搭桥 <span class="status done">✓</span></a>
+  <a href="#ch2">第2章 为什么孩子会蹲在沙坑里搭三个小时的桥 <span class="status wip">待写</span></a>
+  <a href="#ch3">第3章 "这个学了有什么用？" <span class="status wip">待写</span></a>
+
+  <div class="part">拱桥 · 压力创造强度</div>
+  <a href="#ch4">第4章 当学生带着ChatGPT的答案走进教室 <span class="status wip">待写</span></a>
+  <a href="#ch5">第5章 排名、积分、点赞：微型制度 <span class="status wip">待写</span></a>
+  <a href="#ch6">第6章 美丽的初稿 <span class="status wip">待写</span></a>
+
+  <div class="part">斜拉桥 · 每一根索都直接传递力</div>
+  <a href="#ch7">第7章 先给魅力，再给负荷 <span class="status wip">待写</span></a>
+  <a href="#ch8">第8章 把理论藏进手感里 <span class="status wip">待写</span></a>
+  <a href="#ch9">第9章 从"把知识讲清楚"到"让学习发生" <span class="status wip">待写</span></a>
+
+  <div class="part">悬索桥 · 跨越最长距离，依赖最深的锚</div>
+  <a href="#ch10">第10章 人的判断权 <span class="status wip">待写</span></a>
+  <a href="#ch11">第11章 教师是"改稿机器"吗？ <span class="status wip">待写</span></a>
+  <a href="#ch12">第12章 桥不会自己存在 <span class="status wip">待写</span></a>
+
+  <div class="part">组合桥 · 没有一种桥型能解决所有问题</div>
+  <a href="#ch13">第13章 用TRIZ重新理解教学 <span class="status wip">待写</span></a>
+  <a href="#ch14">第14章 一封写给所有孩子的邀请函 <span class="status wip">待写</span></a>
+  <a href="#ch15">第15章 请把手弄脏 <span class="status wip">待写</span></a>
+
+  <a href="#epilogue">尾声：走过的时候，请你，好好地活</a>
+
+  <p style="margin-top:32px;font-size:12px;color:var(--muted);">
+    <a href="https://github.com/syzhaoln-stack/build-a-bridge" style="font-size:12px;">GitHub →</a><br>
+    <a href="https://syzhaoln-stack.github.io/spancraft-bridge-game/" style="font-size:12px;">SpanCraft 游戏 →</a>
+  </p>
+</nav>
+
+<main id="main">
+<div id="content">
+
+<!-- ═══════════ COVER ═══════════ -->
+<section id="cover">
+<div class="cover">
+  <h1>请把手弄脏</h1>
+  <p class="sub">AI时代的学与玩，或一座桥的哲学</p>
+  <p class="desc">
+    一个工科教师用两年时间、120万字课堂录音<br>
+    和一座亲手搭建的桥<br>
+    写给所有不愿被效率吞噬的人
+  </p>
+  <a class="btn" href="#preface">开始阅读</a>
+</div>
+
+<div style="text-align:center;margin:60px 0 40px;color:var(--muted);font-size:15px;line-height:2.2;">
+  <em>"这件最可能成为我们最恒久的丰碑、把我们带向最遥远后世的作品，<br>是一件纯然实用之物——不是神殿，不是堡垒，不是宫殿，而是一座桥。"</em><br>
+  <span style="font-size:13px;">——布鲁克林大桥落成日，1883</span>
+  <br><br>
+  <em>"桥并非只是连接已然分开的两岸。<br>是桥，才让两岸成其为两岸。"</em><br>
+  <span style="font-size:13px;">——海德格尔</span>
+  <br><br>
+  <em>"若不曾为谁搭一座桥，<br>这一天，便算是白过了。"</em><br>
+  <span style="font-size:13px;">——作者</span>
+</div>
+
+<div style="margin:60px 0;padding:30px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
+  <h3 style="margin-top:0;">金句地图</h3>
+  <ul style="padding-left:20px;line-height:2.2;font-size:15px;">
+    <li>"AI的学习是模式匹配，人的学习是意义生成。"（第1章）</li>
+    <li>"学生在学习过程中从来没有失败的权利，他也就没有成功的那个喜悦或者荣耀。"（第1章）</li>
+    <li>"好的教学游戏，是把理论藏进手感里，而不是把公式贴在屏幕上。"（第7章）</li>
+    <li>"AI把'做出来'的门槛降得很低，却把'知道好不好'的门槛抬得更高。"（第6章）</li>
+    <li>"把黑箱，重新变回玻璃箱。"（第8章）</li>
+    <li>"真正危险的，不是交出执行，是交出判断。"（第10章）</li>
+    <li>"桥的本事，是把分开的两岸连起来。一堂好课，做的也是同一件事。"（尾声）</li>
+  </ul>
+</div>
+</section>
+
+<!-- ═══════════ PREFACE ═══════════ -->
+<section id="preface">
+
+<h1>序言：在没人爱土木的时代，我给一座桥写了封情书</h1>
+<p class="deck">
+  在线体验：<a href="https://syzhaoln-stack.github.io/spancraft-bridge-game/">SpanCraft 桥造计划</a>
+</p>
+
+<p>我得先承认一种情绪——骄傲，和一点悲伤。</p>
+
+<p>这些年，<strong>"土木"成了网上反复调侃的"天坑专业"</strong>。分数线在掉，新生群里有人劝退，曾经意气风发想着"逢山开路、遇水架桥"的年轻人，一个接一个转去了计算机、金融。我教桥梁，常常在课堂上看见那种眼神：不是不聪明，是写在脸上的一句话——</p>
+
+<p style="text-align:center;font-size:20px;margin:24px 0;"><em>"学这个，还值得吗？"</em></p>
+
+<p>我理解这种犹豫。行业有它的周期，潮水退下去的时候，谁站在沙滩上谁知道。可每次我走到一座桥下，抬头看那道把天堑变成通途的弧线，那点犹豫又会被一种更古老的东西轻轻盖过去。</p>
+
+<p>布鲁克林大桥落成那年，有人写下一句话：这件最可能成为我们最恒久的丰碑、把我们带向最遥远后世的作品，是一件纯然实用之物——不是神殿，不是堡垒，不是宫殿，而是一座桥。海德格尔说得更玄一点：桥并非只是连接已然分开的两岸，是桥，才让两岸成其为两岸。</p>
+
+<p>我偏爱这两句话。它们其实在说同一件事：<strong>桥是一种沉默的伟大。</strong>它不喧哗，不立庙，不需要谁仰望；它只是日复一日地，把千万人的清晨与归途，稳稳托在自己背上。一个人若亲手把这样的东西建造出来，他有理由骄傲——哪怕这个时代，并没有多少人愿意为他鼓掌。</p>
+
+<p>悲伤也恰恰在这里。桥越修越多，懂桥、爱桥的人，却好像越来越少。更让我难过的是，我们这个行业，常常把最浪漫的事，亲手做成了最枯燥的样子：课程一上来就是规范、荷载、内力、配筋，是一张张让人望而生畏的表格，是一句"你先把这个软件学会"。学生记住了菜单和按钮，却没能爱上结构本身。我们把"理解"外包给了软件，把"美"留在了课本封面之外。久而久之，连我们自己都快忘了，当初是为什么走进这一行的。</p>
+
+<p>于是我想做点别的。我想做一款游戏。</p>
+
+<p>最初的念头很朴素。Poly Bridge 那样的搭桥游戏，外行都玩得不亦乐乎，可它太干净了——干净到几乎不触碰真实的桥。我想做一个保留那份手感、又能把真实桥梁塞进去的东西：让人能凭直觉感到一根混凝土梁该多高，能亲眼看见跨中弯矩那条抛物线，能体会"加一个支座、负弯矩就帮你卸掉一截"的那种妙处。</p>
+
+<p>我很快踩进一个大坑。第一版，我把概念一股脑全堆了进去，结果游戏变成了作业。打开第一关，迎面就是一屏滑块和百分比，外行直接被劝退。我这才想明白：问题从来不是概念太多，而是我用<strong>"做作业"的方式</strong>在给概念，而不是用<strong>"玩"的方式</strong>。这恰恰是我们课堂上最常犯的错。</p>
+
+<p>于是我把它推倒重排，只守住两条原则：<strong>先给魅力，再给负荷；一次，只教一个概念。</strong>开场不再讲道理，而是让你先看见一座黄昏里的斜拉桥——拉索一根根自己生长出来，小车驶过桥面，行人慢慢走过，水面有细碎的波光，远处一只热气球缓缓升起。等你心里"哦，原来桥可以这么好看"那一下被点亮了，再一点一点，把道理喂进去。</p>
+
+<p>我还做了一件让自己最骄傲、也最较劲的事：我没有调用任何商业有限元，而是从零把那套二维计算自己写了出来——组装整体刚度矩阵、求解 <code>KU=F</code>、算内力、画变形。因为我实在太想打破那个"学了个软件操作"的魔咒了。当求解器是你自己一行行写出来的，"建模"就不再是把结构画进软件，而是回到刚度、平衡、协调这些最根本的东西。我想让学生看见的，不是一张五颜六色的结果云图，而是结果如何从 <code>K</code>、<code>U</code>、<code>F</code> 一步一步生长出来。<strong>把黑箱，重新变回玻璃箱</strong>——这件事，软件再贵也替你做不到。</p>
+
+<p>做这些的时候，我心里其实一直清楚：它不会火。这不是一个会被时代偏爱的题材。深夜调一个参数、改一处配色、为一句名言核实出处的时候，我偶尔会有点恍惚——我到底在为谁做这些。</p>
+
+<p>但我又总会想起那句话——<strong>若不曾为谁搭一座桥，这一天，便算是白过了。</strong></p>
+
+<p>我渐渐明白，做这个游戏，某种意义上就是在为我所爱的专业，亲手搭一座很小很小的桥：让一个从没想过土木的人，因为它好看好玩，愿意多停留三十秒；让一个正在犹豫要不要转专业的学生，忽然想起来——结构，原来是有美的；让"严肃"变得可亲一点，也让"有趣"变得可信一点。</p>
+
+<p>我越来越相信，能在同一件事情上同时用两套大脑——一边问"它好不好看"，一边问"它扛不扛得住"——本身就是一种稀缺的能力。创造美，并且严肃地为这份美负责，大概是工程教育里最难教、也最值得教的东西。而要教会它，第一步，是先让人重新愿意爱上它。</p>
+
+<p>桥的本事，是把原本分开的两岸，连成彼此的两岸。</p>
+
+<p>也许一堂好课、一个好游戏，甚至一首恰好的配乐，做的也是同一件事——在一个略显荒凉的时代里，把"骄傲"，和那些"还愿意相信的人"，重新连接起来。</p>
+
+<p>带着骄傲，和一点悲伤，我把这座桥，建给每一个愿意从它背上走过的人。</p>
+
+<p style="text-align:right;margin-top:32px;color:var(--muted);">
+  ColdCat（大连交通大学）<br>
+  2026年7月，于大连
+</p>
+
+<p class="footnote">
+  附记：SpanCraft 桥造计划是我与一位 AI 协作者（Claude）结对设计、边做边复盘的产物——从调研 Poly Bridge 的机制、诊断"作业感"的病根，到一处处落地改动与上线部署。这本书也是一样。把过程如实记下来，算是给"AI + 学科 + 教学设计"这条路留个脚印。
+</p>
+
+<p class="next-chapter">下一章 → 第1章：机器学会了搭桥，但它不知道自己在搭桥</p>
+
+</section>
+
+<!-- ═══════════ CHAPTER 1 ═══════════ -->
+<section id="ch1">
+
+<h1>第1章 · 梁桥<br>机器学会了搭桥，但它不知道自己在搭桥</h1>
+<p class="deck">梁桥是最简单的桥。一根梁，两个支座，就跨越了。但最简单的，往往最难做好。</p>
+
+<h2>AI是怎么学习的？</h2>
+
+<p>2026年7月2日，我在准备一场报告。报告的名字叫"AI时代，教学的变与不变"。我对着录音笔说了一段话，后来被转成了文字：</p>
+
+<blockquote>
+  <p>"AI的学习方式咱们可以借鉴。它是怎么学习的呢？就是通过训练，给它大量的文本。很多时候它也不理解这东西是啥，或者说我们也很难说明什么是'理解'。在这种情况下，就不能说明什么是理解。那就是输入大量的文本，在里面去进行贝叶斯网络的转换。可能这个以后就是未来的理解，到底什么是理解呢？那么这就是理解。"</p>
+  <cite>——2026年7月2日，录音转写</cite>
+</blockquote>
+
+<p>这段话里有一个词，我自己说出来的时候都没意识到它有多重要：<strong>"它也不理解这东西是啥。"</strong></p>
+
+<p>AI的学习方式，拆开来看，其实很简单。</p>
+
+<h3>第一步：喂数据</h3>
+<p>你给AI看海量的文本。桥梁工程教材、设计规范、施工方案、论文、博客、论坛帖子……它看过的桥，比任何桥梁工程师一辈子见到的都多。</p>
+
+<h3>第二步：找规律</h3>
+<p>AI在这些文本中寻找统计规律。它发现"简支梁"这个词后面经常跟着"跨中弯矩"；它发现"<code>qL²/8</code>"这个公式常常出现在"简支梁"和"弯矩"附近；它发现"悬索桥"和"主缆""锚碇""吊杆"这些词有很高的共现概率。</p>
+
+<h3>第三步：生成输出</h3>
+<p>当你问它"简支梁跨中弯矩是多少"，它做的事情不是回忆、不是推导、不是理解——它是<strong>计算</strong>：在它见过的所有文本里，最有可能的、最合理的、最符合统计规律的输出，就是"<code>qL²/8</code>"。</p>
+
+<p>它不知道 <code>q</code> 是荷载，不知道 <code>L</code> 是跨度，不知道那个 <code>1/8</code> 是从哪里来的。它只知道——这个答案，命中的概率最高。</p>
+
+<h3>AI的"记忆"</h3>
+
+<p>在同一段录音里，我还说了另一句话：</p>
+
+<blockquote>
+  <p>"机器人有上下文，我们经常说学生记得这个就忘了那个。用AI的话说，就是上下文比较短，执行力比较差，情绪价值要求比较高，月费好几千。"</p>
+  <cite>——2026年7月2日，同一段录音</cite>
+</blockquote>
+
+<p>AI的"记忆"有一个硬边界，叫<strong>上下文窗口</strong>。你可以把它想象成一个只能装固定数量文字的盒子。盒子满了，旧的被挤出去。AI只能"看见"盒子里的东西。</p>
+
+<p>这个盒子在2025年大约能装15万字，2026年能装100万字。但不管多大，它仍然是一个盒子。AI没有"经验"。它不会说"我记得大一那年，我的结构力学老师说过……"它不会说"上次我做这个的时候，犯了一个错误，这次我不会再犯。"</p>
+
+<div class="insight">
+  AI的学习，本质上是统计推断。它的目标函数只有一个：让预测误差最小化。<br><br>
+  它不在乎"桥"是什么。它不知道塔科马大桥在1940年倒塌的时候，工程师们震惊地发现，他们引以为傲的静力分析在风的作用下完全失效了。它不知道那些失败改变了一整个学科。<br><br>
+  AI知道事实。它不知道事实的重量。
+</div>
+
+<h2>人是怎么学习的？</h2>
+
+<p>2025年11月4日，下午3点25分，我在课堂上讲涡振原理。</p>
+
+<div class="scene">
+  <div class="label">课堂原声</div>
+  <p><strong>2025年11月4日，大连交通大学，桥梁抗风课。</strong></p>
+  <p>我在电子白板上放了一个CFD模拟视频。一个圆柱体，均匀的风吹过来，尾部交替脱落着涡。我指着屏幕上周期性波动的升力曲线，说：</p>
+  <p>"这个，就是涡振。"</p>
+  <p>然后我停了一下，说了一段话，后来转写出来是这样的：</p>
+  <blockquote style="margin:12px 0;">
+    "其实我不觉得任何这个荷载特性啊，或者是风震，是你们必须学的。我更希望就是你们看到这个研究的背后——其实就是对一个简单的动力学方程，今天怎么处理，怎么去简化。把这种复杂的问题简化到那去，包括怎么去面对这么复杂的这个问题，怎么把它分解成几个独立的振动形式，然后再去讨论……所以我觉得这个反而是很很有意义的。就是一个最简单的公式，怎么能 cover 到这么多的这个现象。"
+  </blockquote>
+  <p class="meta">——2025年11月4日，涡振原理课，<a href="https://github.com/syzhaoln-stack/build-a-bridge">录音转写</a></p>
+</div>
+
+<p>这段话里，我没有说"今天的教学目标是理解涡振原理"。我说的是：<strong>怎么把一个复杂问题分解成几个独立的振动形式。</strong></p>
+
+<p>这不是知识。这是一种<strong>思维方式</strong>。而思维方式，AI不会教。</p>
+
+<h3>人学习时，身体在动，手心在出汗</h3>
+
+<p>2026年5月22日，我在面向呼和浩特铁路局教师的线上分享会上，讲游戏化教学。我讲到了一件事：</p>
+
+<blockquote>
+  <p>"学生在上这门课之前已经学过材料力学、结构力学、或者理论力学，但是他搭建这个桥梁的过程或者状态，跟他六岁的小孩搭建这个状态是完全一致的。我们不是说他这个多么低龄或多么幼稚。我们在说，其实我们讲授的很多的理论的这种课程，如果没有经过这种实操、试错、迭代、失败成功的这个过程，他可能很难入到你一个学生的这个直觉里面去。"</p>
+  <cite>——2026年5月22日，游戏化教学分享，录音转写</cite>
+</blockquote>
+
+<p>这句话里有一个特别重要的词：<strong>直觉</strong>。</p>
+
+<p>一个学完了材料力学、结构力学、理论力学的大学生，当他第一次打开Poly Bridge搭桥的时候，他的行为和一个六岁小孩<strong>完全一样</strong>。他不是在调用公式，他是在用直觉——这里加一根杆试试，那里加高一点试试，塌了，换一种方式，又塌了，再换一种……</p>
+
+<p>这不是退化。这是<strong>学习的本质状态</strong>。</p>
+
+<div class="insight">
+  人的学习不是模式匹配。人的学习是——经历从不知道到知道的过程，并被这个过程改变。<br><br>
+  AI的输出是"答案"。人的输出是"我懂了"。AI不会在输出正确结果时心跳加速。AI不会在深夜想起自己第一次搭桥成功的那一瞬间，嘴角微微上扬。
+</div>
+
+<h3>失败的权利</h3>
+
+<p>在同一场分享里，我还说了一句话：</p>
+
+<blockquote>
+  <p>"学生在学习过程中从来没有失败的权利，他也就没有成功的那个喜悦或者荣耀。"</p>
+  <cite>——2026年5月22日，同一场分享</cite>
+</blockquote>
+
+<p>这句话，是我在讲完Poly Bridge之后说的。我给学生看了一段视频：一座桥，小车开上去，桥塌了。然后学生改了三个地方，又试了一次。桥站住了。</p>
+
+<p>整个过程不到两分钟。但这两分钟里，学生经历了：<strong>困惑→尝试→失败→观察→调整→再尝试→成功→骄傲。</strong></p>
+
+<p>在传统的课堂里，这个回路通常被压缩成一个步骤：<strong>"记住这个公式，考试会考。"</strong></p>
+
+<h2>两种学习，两种"理解"</h2>
+
+<table>
+  <tr><th>AI的学习</th><th>人的学习</th></tr>
+  <tr><td>目标：最小化预测误差</td><td>目标：理解世界，并能在其中行动</td></tr>
+  <tr><td>输入：海量文本</td><td>输入：有限但多模态的体验（视觉、触觉、情感）</td></tr>
+  <tr><td>记忆：上下文窗口内的完美复制</td><td>记忆：选择性的，在遗忘中保留本质</td></tr>
+  <tr><td>反馈：损失函数数值下降</td><td>反馈：<strong>桥塌了、老师点头了、心里"啊哈"了一声</strong></td></tr>
+  <tr><td>错误：统计偏差，需要更多数据</td><td>错误：<strong>最有价值的老师</strong></td></tr>
+  <tr><td>"理解"：能生成正确的输出</td><td>"理解"：能解释、能迁移、<strong>能在自己错的时候知道自己错了</strong></td></tr>
+</table>
+
+<h2>梁桥的隐喻</h2>
+
+<p>梁桥是所有桥型里最简单的。一根梁，两个支座。它不优雅，不壮观，不需要任何高级的力学原理。它只是<strong>直接跨越</strong>。</p>
+
+<p>但梁桥有一个致命的弱点：<strong>跨度越大，自重越大。</strong></p>
+
+<p>2025年10月21日，我在课堂上讲到这件事：</p>
+
+<blockquote>
+  <p>"我们的桥梁的载重比其实是非常小的。一般来说，一个大跨度桥梁，大概百分之八十是它的自重，百分之二十是车辆。所以说，我们实际上只有百分之二十的承载能力是用在了承载荷载上。所以这个就是很大的浪费嘛。就是姜文的电影是吧——为了这碟醋包了顿饺子。"</p>
+  <cite>——2025年10月21日，桥梁课程，录音转写</cite>
+</blockquote>
+
+<p>"为了这碟醋包了顿饺子"——这句话，是我课堂上说的。后来这段录音被转写成文字，我重新读到的时候，发现它比我想象的更好。</p>
+
+<p><strong>梁桥的自重，就是AI时代教育面临的问题。</strong></p>
+
+<p>我们用80%的精力教学生"知识"——公式、规范、软件操作。这些东西，AI一秒钟就能生成。我们只有20%的精力用在真正重要的东西上——<strong>困惑、尝试、失败、骄傲、判断、审美、责任</strong>。</p>
+
+<p>就像梁桥，80%的自重，20%的荷载。<strong>效率极低。</strong></p>
+
+<p>但这不是AI的错。AI只是把这个问题暴露了出来。它把"做出来"的门槛降到了零，于是我们突然发现：<strong>原来我们花了80%的精力教的东西，根本不值钱。</strong></p>
+
+<div class="insight">
+  梁桥的困境，就是当代教育的困境。<br><br>
+  不是AI太强了，是我们一直在教AI擅长的东西。当AI能生成一切"看起来像桥"的东西，真正稀缺的就不再是生成，而是<strong>判断</strong>。不再是速度，而是<strong>责任</strong>。不再是看起来像，而是<strong>真的站得住</strong>。
+</div>
+
+<h2>这一章，我们站到了哪里</h2>
+
+<p>这本书叫《请把手弄脏》。这五个字来自一个很具体的画面：一个学生，打开电脑，自己写了一个有限元求解器，然后指着它说——"这是我的。"</p>
+
+<p>这个画面出现在这本书的尾声。但在这之前，我们还有很多路要走。</p>
+
+<p>这一章，我们只做了一件事：<strong>把AI的学习和人的学习，放在一起看。</strong></p>
+
+<p>AI的学习是统计推断。人的学习是意义生成。AI输出的是"答案"。人输出的是"我懂了"。AI不会骄傲。AI不会在深夜想起自己第一次搭桥成功的那一瞬间。</p>
+
+<p>梁桥是最简单的桥。但最简单的，往往最难做好。</p>
+
+<div class="shiyu">
+  <div class="label">师宇手记</div>
+  <p><strong>AI已经会搭桥了，问题是人还想不想过桥。</strong></p>
+  <p>"AI的学习"这个词，本身就是一个陷阱。我们把"输出正确答案"和"理解"混为一谈了。就像我们把"会背乘法表"和"懂数学"混为一谈一样。</p>
+  <p>AI时代的教育，真正的问题不是"AI能替代什么"，而是<strong>"当AI能替代一切，人还剩下什么？"</strong></p>
+  <p>人剩下的，恰好是AI永远无法拥有的东西：困惑、好奇心、挫败感、骄傲、责任感、审美判断、以及"非做不可"的理由。</p>
+  <p>这些，才是学习的真正内容。而AI的出现，只是帮我们把这些东西从"知识传递"的杂音中清晰地分离了出来。</p>
+</div>
+
+<div class="decision">
+  <div class="label">教师决策时刻</div>
+  <p><strong>这一章，我们看到了两种"学习"的本质区别。</strong></p>
+  <p>现在，打开你的下一节课的PPT。找到第一页。删掉"课程目标"。换成一句话，让你的学生<strong>想</strong>知道接下来会发生什么。</p>
+  <p>不是"通过本章学习，你将掌握……"<br>而是"你有没有想过，为什么……？"</p>
+  <p>就这一句。改完发给我。</p>
+</div>
+
+<p class="next-chapter">下一章 → 第2章：为什么孩子会蹲在沙坑里搭三个小时的桥</p>
+
+</section>
+
+<!-- ═══════════ EPILOGUE ═══════════ -->
+<section id="epilogue">
+
+<h1>尾声：走过的时候，请你，好好地活</h1>
+
+<p>2026年7月1日，桥梁工程AI课程设计项目结题汇报。</p>
+
+<p>一个学生站起来，打开他的项目。是一个网页——一座斜拉桥，可以在浏览器里旋转、缩放、加载小车。他调了一下参数，桥面下挠了12毫米。他打开规范，对照了一下挠跨比。合格。</p>
+
+<p>他说："这个项目，我做了两个月。前一个月，我一直在用AI生成——生成模型、生成代码、生成报告。但有一天，我生成了一座桥，老师看了一眼，说了一句：'你觉得这座桥对吗？'"</p>
+
+<p>"我愣了一下。我说，AI给的，应该对吧。"</p>
+
+<p>"老师说：'AI从来没说过它不会。'"</p>
+
+<p>"那天晚上，我打开了我自己写的有限元求解器——不是AI生成的，是我自己一行一行写的。我重新算了一遍。我发现了三个错误。AI没有发现这些错误，因为它们不是'语法错误'，它们是'工程判断错误'——AI不知道一根梁多高才合理，不知道一个节点在什么位置才安全，不知道一个安全系数取多少才够。"</p>
+
+<p>"我花了三个晚上，一个一个改。改完之后，我重新打开那座桥。它比以前丑了。梁变高了，索变粗了，桥塔变厚了。但它是对的。"</p>
+
+<p>他停了一下，然后说了一句话，让我至今记得：</p>
+
+<p style="font-size:18px;font-weight:600;margin:20px 0;padding-left:16px;border-left:3px solid var(--ink);">
+  "老师，我以前觉得，'学这个还值得吗'。现在我知道了，不值得——如果你只想找一个工作的话。但如果你想让一座桥站住，它就值得。"
+</p>
+
+<h2>桥的本事</h2>
+
+<p>桥的本事，是把原本分开的两岸，连成彼此的两岸。</p>
+
+<p>海德格尔说这句话的时候，他说的不是工程。他说的是<strong>存在</strong>。一座桥不是简单地连接了A点和B点。一座桥让A点成了"此岸"，让B点成了"彼岸"。在桥出现之前，两岸只是两块土地。在桥出现之后，它们成了彼此的对方。</p>
+
+<p>一堂好课，做的也是同一件事。</p>
+
+<p>在好的课堂出现之前，学生和学生是两个互不相干的个体。在好的课堂出现之后，他们成了"我们"——一群一起搭过桥的人，一起失败过、一起骄傲过、一起在深夜调过参数的人。</p>
+
+<p>一个好游戏，做的也是同一件事。</p>
+
+<p>在好游戏出现之前，"知识"和"我"是两个互不相干的东西。在好游戏出现之后，知识成了我手指上的感觉——那个 <code>qL²/8</code>，不再是黑板上的一行公式，而是我亲手让它塌过三次之后，终于理解了的东西。</p>
+
+<p><strong>桥的本事，是让分开的，重新成为彼此的。</strong></p>
+
+<h2>在一个略显荒凉的时代里</h2>
+
+<p>这本书写于2025—2026年。</p>
+
+<p>这不是一个对土木工程特别友好的时代。分数线在掉，新生群里有人劝退，AI可以生成一切"看起来像桥"的东西。但这也是一个对土木工程特别需要的时代——因为<strong>当AI能生成一切的时候，真正稀缺的，就不再是生成，而是判断。不再是速度，而是责任。不再是看起来像，而是真的站得住。</strong></p>
+
+<p>土木工程教会我的，恰好就是这些：<strong>你不能骗一座桥。</strong>你可以骗一份PPT，你可以骗一份报告，你可以骗一个评委。但你不能骗一座桥。桥不会听你解释。它只会站住，或者塌掉。</p>
+
+<p>在一个越来越多人相信"差不多就行"的世界里，这种"不能骗"的品格，是一种稀缺的、值得被保护的东西。</p>
+
+<p><strong>创造美，并且严肃地为这份美负责——这大概是工程教育里最难教、也最值得教的东西。</strong></p>
+
+<h2>请把手弄脏</h2>
+
+<p>这本书的标题叫做《请把手弄脏》。</p>
+
+<p>这不是一个比喻。我真的是在说：请伸出你的手，去碰混凝土，去弯钢筋，去调参数，去写代码，去搭一座桥，然后看它塌掉，再搭一座，再看它塌掉，再搭一座——直到它站住。</p>
+
+<p><strong>因为幸福感不是来自"拥有"，而是来自"做过"。</strong></p>
+
+<p>AI可以生成一座完美的桥，但它没有手。它没有碰过混凝土，没有感受过钢筋被弯折时的阻力，没有在深夜因为一个参数调不对而摔过键盘。它生成的桥，不是它的。<strong>你亲手搭的桥，才是你的。</strong></p>
+
+<p>在一个效率至上的世界里，我们被教导要"快"。要"高效"。要"用AI替代重复劳动"。但有些东西，不能快。有些东西，必须慢。有些东西，必须亲手做。</p>
+
+<p><strong>不是AI做不了。是AI做了，就不是你的了。</strong></p>
+
+<h2>一封邀请函</h2>
+
+<p>这本书，是一封邀请函。</p>
+
+<p>不是邀请你"学土木工程"。不是邀请你"用AI"。不是邀请你"参加教学创新比赛"。</p>
+
+<p>是邀请你——<strong>把手弄脏。</strong></p>
+
+<p>搭一座桥。写一段代码。画一张图。做一个游戏。设计一堂课。写一本书。不管是什么，重要的是：你亲手做的。你失败过。你改过。你骄傲过。你指着它说——<strong>这是我的。</strong></p>
+
+<p>在一个略显荒凉的时代里，把"骄傲"，和那些"还愿意相信的人"，重新连接起来。</p>
+
+<p style="text-align:center;font-size:20px;margin:32px 0;">
+  <em>走过的时候，请你，好好地活。</em>
+</p>
+
+<p style="text-align:center;color:var(--muted);margin-bottom:40px;">
+  ——若不曾为谁搭一座桥，这一天，便算是白过了。
+</p>
+
+<p style="text-align:right;color:var(--muted);">
+  ColdCat（大连交通大学）<br>
+  2026年7月，于大连
+</p>
+
+</section>
+
+</div>
+</main>
+</div>
+
+<script>
+// Highlight active nav item based on scroll
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('#sidebar a[href^="#"]');
+
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    const top = s.offsetTop - 80;
+    if (window.scrollY >= top) current = s.getAttribute('id');
+  });
+  navLinks.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+});
+</script>
+
+</body>
+</html>
