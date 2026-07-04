@@ -1,0 +1,45 @@
+# Build output
+*.aux
+*.log
+*.out
+*.toc
+*.bbl
+*.bcf
+*.blg
+*.run.xml
+*.synctex.gz
+*.idx
+*.ind
+*.ilg
+*.lof
+*.lot
+*.pyg
+*.nav
+*.snm
+*.vrb
+*.fls
+*.fdb_latexmk
+
+# Compiled PDF
+main.pdf
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Minted cache
+_minted-*
+
+# Python
+__pycache__/
+*.pyc
+
+# Node
+node_modules/

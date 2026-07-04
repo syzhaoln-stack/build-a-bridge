@@ -1,0 +1,318 @@
+% ============================================
+% 《请把手弄脏：AI时代的学与玩，或一座桥的哲学》
+% 作者：ColdCat（大连交通大学）
+% 编译器：XeLaTeX
+% ============================================
+
+\documentclass[UTF8,a4paper,openany,12pt]{ctexbook}
+
+% ====== 基础包 ======
+\usepackage[scheme=chinese]{ctex}
+\usepackage{xeCJK}
+\usepackage{fontspec}
+
+% ====== 页面布局 ======
+\usepackage[top=2.5cm,bottom=2.5cm,left=2.8cm,right=2.8cm]{geometry}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[RE]{\leftmark}
+\fancyhead[LO]{\rightmark}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ====== 颜色系统 ======
+\usepackage{xcolor}
+\definecolor{ink}{RGB}{31,36,48}        % 正文墨色
+\definecolor{muted}{RGB}{105,113,134}   % 次要文字
+\definecolor{blue}{RGB}{84,119,196}     % 链接色
+\definecolor{blue-soft}{RGB}{234,241,254} % 浅蓝底
+\definecolor{gold}{RGB}{255,244,194}    % 高亮底
+\definecolor{line}{RGB}{229,232,240}    % 分割线
+\definecolor{paper}{RGB}{252,252,253}   % 页面底色
+\definecolor{red-soft}{RGB}{255,240,240} % 警示底
+
+% ====== 图表与插图 ======
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{float}
+\usepackage[export]{adjustbox}
+
+% ====== 表格 ======
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage[table]{xcolor}
+\definecolor{triz-blue}{RGB}{234,241,254}
+\definecolor{triz-gold}{RGB}{255,244,194}
+
+% ====== 代码块 ======
+\usepackage{minted}
+\setminted{
+    fontsize=\small,
+    breaklines=true,
+    frame=single,
+    bgcolor=gray!5,
+    numbers=left,
+    numbersep=5pt
+}
+
+% ====== 引用与链接 ======
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+    citecolor=blue
+}
+\usepackage[backend=biber,style=gb7714-2015]{biblatex}
+\addbibresource{bib/refs.bib}
+
+% ====== 索引 ======
+\usepackage{makeidx}
+\makeindex
+
+% ====== 自定义环境 ======
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins,breakable}
+
+% 课堂原声
+\newtcolorbox[auto counter]{classroom-scene}{
+    colback=gray!5,
+    colframe=gray!50,
+    fontupper=\sffamily\small,
+    title={\textbf{课堂原声} \hfill \texttt{\thetcbcounter}},
+    breakable,
+    before skip=12pt,
+    after skip=12pt
+}
+
+% 师宇手记（反思旁白）
+\newtcolorbox[auto counter]{shiyu-note}{
+    colback=blue-soft,
+    colframe=blue,
+    fontupper=\kaishu\small,
+    title={\textbf{师宇手记} \hfill \texttt{\thetcbcounter}},
+    breakable,
+    before skip=18pt,
+    after skip=18pt,
+    left=8pt,
+    right=8pt
+}
+
+% 关键洞察（拍案时刻）
+\newtcolorbox[auto counter]{insight}{
+    colback=gold,
+    colframe=gold!80!black,
+    fontupper=\bfseries,
+    title={\Large 💡 \hfill \texttt{\thetcbcounter}},
+    breakable,
+    before skip=16pt,
+    after skip=16pt
+}
+
+% 技术注释
+\newtcolorbox[auto counter]{tech-note}{
+    colback=red-soft,
+    colframe=red-soft!80!black,
+    fontupper=\small,
+    title={\textbf{技术说明} \hfill \texttt{\thetcbcounter}},
+    breakable
+}
+
+% 反向决策（每章末尾）
+\newtcolorbox[auto counter]{decision-point}{
+    colback=paper,
+    colframe=blue!50,
+    fontupper=\itshape,
+    title={\textbf{教师决策时刻} \hfill \texttt{\thetcbcounter}},
+    breakable,
+    before skip=20pt,
+    after skip=20pt
+}
+
+% 双声部：师宇旁白（行内）
+\newenvironment{shiyu-inline}
+  {\begin{quote}\kaishu\small\color{muted}}
+  {\end{quote}}
+
+% ====== 标题格式 ======
+\ctexset{
+    chapter = {
+        format = \huge\bfseries\centering,
+        name = {第,章},
+        number = \arabic{chapter},
+        aftername = \hspace{1em},
+        beforeskip = 40pt,
+        afterskip = 30pt
+    },
+    section = {
+        format = \Large\bfseries,
+        beforeskip = 24pt,
+        afterskip = 12pt
+    },
+    subsection = {
+        format = \large\bfseries,
+        beforeskip = 18pt,
+        afterskip = 8pt
+    }
+}
+
+% ====== 其他 ======
+\usepackage{enumitem}
+\setlist{nosep,left=2em}
+\usepackage{epigraph}
+\setlength{\epigraphwidth}{0.7\textwidth}
+
+% ====== 文档信息 ======
+\title{请把手弄脏：AI时代的学与玩，或一座桥的哲学}
+\author{ColdCat（大连交通大学）}
+\date{\today}
+
+\begin{document}
+
+% ====== 封面 ======
+\begin{titlepage}
+\centering
+\vspace*{4cm}
+
+{\Huge\bfseries 请把手弄脏}
+
+\vspace{0.8cm}
+
+{\LARGE AI时代的学与玩，或一座桥的哲学}
+
+\vspace{2cm}
+
+{\large 一个工科教师用两年时间、120万字课堂录音}
+
+{\large 和一座亲手搭建的桥}
+
+{\large 写给所有不愿被效率吞噬的人}
+
+\vspace{3cm}
+
+{\large ColdCat（大连交通大学）}
+
+\vfill
+
+{\small\color{muted} 2026年7月 · 初稿}
+
+\end{titlepage}
+
+% ====== 扉页引言 ======
+\thispagestyle{empty}
+\vspace*{3cm}
+
+\begin{center}
+{\large\itshape
+``这件最可能成为我们最恒久的丰碑、把我们带向最遥远后世的作品，\\
+是一件纯然实用之物——不是神殿，不是堡垒，不是宫殿，而是一座桥。''}
+
+\vspace{1cm}
+——布鲁克林大桥落成日，1883
+
+\vspace{2cm}
+
+{\large\itshape
+``桥并非只是连接已然分开的两岸。\\
+是桥，才让两岸成其为两岸。''}
+
+\vspace{1cm}
+——海德格尔
+
+\vspace{2cm}
+
+{\large\itshape
+``若不曾为谁搭一座桥，\\
+这一天，便算是白过了。''}
+
+\vspace{1cm}
+——作者
+\end{center}
+
+% ====== 目录 ======
+\tableofcontents
+
+% ====== 金句地图 ======
+\chapter*{金句地图}
+\addcontentsline{toc}{chapter}{金句地图}
+
+\begin{center}
+{\large\itshape 在开始之前，先把这本书的骨头亮给你看。}
+\end{center}
+
+\vspace{1cm}
+
+\begin{quote}
+\begin{itemize}[left=0pt]
+  \item ``AI的学习是模式匹配，人的学习是意义生成。''（第1章）
+  \item ``孩子蹲在沙坑里搭三个小时的桥——不是因为好玩，是因为他主动选择了一个困难，并且正在克服它。''（第2章）
+  \item ``效率杀不死意义，但它会让意义变哑。''（第3章）
+  \item ``好的教学游戏，是把理论藏进手感里，而不是把公式贴在屏幕上。''（第7章）
+  \item ``AI把'做出来'的门槛降得很低，却把'知道好不好'的门槛抬得更高。''（第6章）
+  \item ``把黑箱，重新变回玻璃箱。''（第8章）
+  \item ``真正危险的，不是交出执行，是交出判断。''（第10章）
+  \item ``创造美，并且严肃地为这份美负责——这是工程教育里最难教、也最值得教的东西。''（第12章）
+  \item ``Skill不是取经路。把经历写成'遇到妖怪就打'，并不会让另一只猴子成为孙悟空。''（第10章）
+  \item ``桥的本事，是把分开的两岸连起来。一堂好课，做的也是同一件事。''（尾声）
+\end{itemize}
+\end{quote}
+
+\newpage
+
+% ====== 序言 ======
+\include{preface}
+
+% ====== 第一部分：两岸 ======
+\part{桥的两岸\\[4pt] {\large\color{muted}AI如何学习，人如何学习}}
+\include{chapters/part1-liangan/chap01}
+\include{chapters/part1-liangan/chap02}
+\include{chapters/part1-liangan/chap03}
+
+% ====== 第二部分：荷载 ======
+\part{桥的荷载\\[4pt] {\large\color{muted}新范式撞击旧系统}}
+\include{chapters/part2-hezai/chap04}
+\include{chapters/part2-hezai/chap05}
+\include{chapters/part2-hezai/chap06}
+
+% ====== 第三部分：传力路径 ======
+\part{桥的传力路径\\[4pt] {\large\color{muted}学习回路的设计}}
+\include{chapters/part3-chuanli/chap07}
+\include{chapters/part3-chuanli/chap08}
+\include{chapters/part3-chuanli/chap09}
+
+% ====== 第四部分：支座 ======
+\part{桥的支座\\[4pt] {\large\color{muted}不可外包的底线}}
+\include{chapters/part4-zhizuo/chap10}
+\include{chapters/part4-zhizuo/chap11}
+\include{chapters/part4-zhizuo/chap12}
+
+% ====== 第五部分：拱轴线 ======
+\part{桥的拱轴线\\[4pt] {\large\color{muted}最优曲线，或幸福的形状}}
+\include{chapters/part5-gongzhouxian/chap13}
+\include{chapters/part5-gongzhouxian/chap14}
+\include{chapters/part5-gongzhouxian/chap15}
+
+% ====== 尾声 ======
+\include{epilogue}
+
+% ====== 附录 ======
+\appendix
+\include{appendix/A-game-template}
+\include{appendix/B-skill-framework}
+\include{appendix/C-recording-sop}
+\include{appendix/D-triz-matrix}
+\include{appendix/E-spancraft-design}
+\include{appendix/F-visualization-links}
+
+% ====== 参考文献 ======
+\printbibliography[title={参考文献}]
+
+% ====== 索引 ======
+\printindex
+
+\end{document}
