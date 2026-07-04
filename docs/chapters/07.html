@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f7f4ed">
+  <title>Chapter 07｜请把手弄脏</title>
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>.reading-pane:before{height:380px;opacity:.22;filter:contrast(1.08) saturate(1.04)}@media(max-width:820px){.reading-pane:before{width:100vw;opacity:.17}}</style>
+  <script defer src="../assets/site.js"></script>
+  <script>window.MathJax={svg:{fontCache:'global'}};</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body>
+  <a class="skip" href="#article">跳到正文</a>
+  <button class="menu-button" type="button" aria-controls="book-nav" aria-expanded="false">目录</button>
+  <div class="scrim" hidden></div>
+  <aside class="book-nav" id="book-nav">
+    <a class="brand" href="../index.html"><span>请把手弄脏</span><small>AI时代的学与玩，或一座桥的哲学</small></a>
+    <nav aria-label="全书目录">
+      <details open><summary>梁桥</summary>
+        <a href="01.html">01 机器学会了搭桥</a><a href="02.html">02 为什么还愿意再试一次</a><a href="03.html">03 学了有什么用</a>
+      </details>
+      <details open><summary>拱桥</summary>
+        <a href="04.html">04 当答案走进教室</a><a href="05.html">05 排名、积分与点赞</a><a href="06.html">06 美丽的初稿</a>
+      </details>
+      <details open><summary>斜拉桥</summary>
+        <a href="07.html">07 先给魅力，再给负荷</a><a href="08.html">08 把理论藏进手感</a><a href="09.html">09 让学习发生</a>
+      </details>
+      <details open><summary>悬索桥</summary>
+        <a href="10.html">10 人的判断权</a><a href="11.html">11 教师是改稿机器吗</a><a href="12.html">12 桥不会自己存在</a>
+      </details>
+      <details open><summary>组合桥</summary>
+        <a href="13.html">13 用TRIZ重新理解教学</a><a href="14.html">14 一封邀请函</a><a href="15.html">15 请把手弄脏</a>
+      </details>
+    </nav>
+    <div class="nav-meta"><a href="https://syzhaoln-stack.github.io/projection-master/">进入投影工作台 ↗</a><br><a href="https://syzhaoln-stack.github.io/spancraft-bridge-game/">进入 SpanCraft 游戏 ↗</a><br><a href="https://github.com/syzhaoln-stack/build-a-bridge">本书 GitHub / 勘误</a></div>
+  </aside>
+  <main class="reading-pane">
+    <article id="article" class="article"><h1 id="先给魅力再给负荷">先给魅力，再给负荷</h1>
+<div class="center">
+<p><span> 斜拉桥的每一根索，都直接从桥面拉到桥塔。</span> <span> 力不绕弯路。反馈不绕弯路。</span> <span> 学习回路的设计，就是拉索的位置。</span></p>
+</div>
+<h2 id="poly-bridge好玩但太干净">Poly Bridge好玩，但“太干净”</h2>
+<p>教桥梁的人，多半都玩过Poly Bridge。它把“应力=力/截面积”做成了一条会从绿变黄变红的颜色条，把“预算约束”做成了每一关的省钱博弈，把“移动荷载”做成了一辆摇摇晃晃过桥的小车。外行也能上手，工程师看了会心一笑。</p>
+<p>但作为老师，我们总觉得它<strong>太干净了</strong>。它几乎不关心一根混凝土梁该多高、该用实心还是空心；它不会让你体会“简支梁跨中弯矩<span class="math inline"><em>q</em><em>L</em><sup>2</sup>/8</span>”的那个<span class="math inline">1/8</span>，也不会让你发现“加一个中支座、用负弯矩去卸载正弯矩”的妙处。而这些，恰恰是真实桥梁里常见、朴素、也重要的事。梁式桥在许多中小跨径场景中广泛应用，但这里不使用没有统计口径的桥型占比。</p>
+<p>于是我们动手了：做一个<strong>保留Poly Bridge那套手感、但把真实桥梁概念塞进去</strong>的游戏。</p>
+<h2 id="第一个坑我们把概念堆成了作业">第一个坑：我们把“概念”堆成了“作业”</h2>
+<p>很快，我们做出了一个内核相当扎实的版本。它的物理引擎不是简单的弹簧，而是带抗弯能力的XPBD求解器；它真的实现了简支梁的弯矩包络——跨中峰值、两端最小，就是那条抛物线，加一个中支座后峰值会真实地降下来——连续梁的负弯矩卸载，在仿真里是成立的。它还能让你选实心/空心、调梁高、做变截面，并实时显示面积<span class="math inline"><em>A</em></span>、惯性矩<span class="math inline"><em>I</em></span>、截面模量<span class="math inline"><em>W</em></span>。</p>
+<p><strong>从概念覆盖看，它很有野心；从游戏体验看，它却容易劝退。</strong>当时的原型没有经过足以证明工程可靠性的系统验证，不能写成“无可挑剔”。</p>
+<p>问题在哪？我们复盘时发现，病根不是“概念太多”，而是：</p>
+<div class="shiyu-inline">
+<p><strong>概念是以“做作业”的方式呈现的，而不是以“玩”的方式。</strong></p>
+<p>——SpanCraft设计复盘，2026年6月</p>
+</div>
+<p>最刺眼的几处：</p>
+<ul>
+<li><p><strong>认知负荷全压在第一关。</strong>一个外行打开游戏，第一关迎面就是全场最密的面板：实心/空心、梁高滑块、等高/跨中加高/墩顶加高、跨中支座、再加<span class="math inline"><em>A</em>/<em>I</em>/<em>W</em></span>三个百分比。“外行也能玩”被第一屏直接劝退。</p></li>
+<li><p><strong>数字没有直觉。</strong>“自重58%、刚度86%”是工程报告语言。玩家感受不到“为什么箱梁更优”，因为他<strong>看不见</strong>截面在变、看不见弯矩在哪最大。</p></li>
+<li><p><strong>最不好玩的关，占了最多的UI。</strong>梁桥本质是“铺一块平板+调滑块”，是五关里空间创造性最低的；可它却背着最重的参数面板。拱、桁架、斜拉、悬索那些“画形状”的关反而清爽。</p></li>
+</ul>
+<p>一句话：我们以为加的是“深度”，玩家收到的是“作业”。</p>
+<h2 id="转向先给魅力再给负荷">转向：先给魅力，再给负荷</h2>
+<p>第二版的所有改动，只围绕两条原则。这两条原则，在游戏设计里是常识，在课堂设计里却常被我们忽略：</p>
+<ol>
+<li><p><strong>先给魅力，再给负荷</strong>（Lead with charm, then load）。</p></li>
+<li><p><strong>渐进式揭示，一次只教一个概念</strong>（Progressive disclosure）。</p></li>
+</ol>
+<p>具体我们做了什么：</p>
+<p><strong>把开场从“说明书”换成“一座活的桥”。</strong>原来的开场是几根静态线条拼的小桥+一张贴图，在“讲”桥很酷；新版直接让你<strong>看见</strong>一座黄昏里的斜拉桥——拉索一根根自己画出来、小车驶过桥面、行人走过、水面波光、热气球缓缓升起。魅力是被看见的，不是被描述的。</p>
+<p><strong>把那块最重的“主梁截面”面板拍瘦。</strong>砍掉梁高滑块、变截面、<span class="math inline"><em>A</em>/<em>I</em>/<em>W</em></span>，只留两个<strong>有真实造型的选项</strong>：空心板梁（板内一排圆孔）和箱梁（梯形箱+悬臂翼板）。截面的概念还在，但不再是一屏滑块。</p>
+<p><strong>让信息跟着情境走。</strong>建造模式只显示“建造工具”，试车模式只显示“受力遥测”。你在搭桥时不会被一堆“等待加载”的空仪表干扰；你在看桥时，建造面板会让位给注意力。</p>
+<p><strong>把变形放大、把梁画薄。</strong>试车时下挠更明显（纯显示放大，物理不变），桥面画成原来三分之一的薄度——梁“在受力”这件事，第一次变得<strong>看得见</strong>。</p>
+<div class="insight">
+<p><span id="insight:chap7" label="insight:chap7"></span></p>
+<p><strong>好的教学游戏，是把理论藏进手感里，而不是把公式贴在屏幕上。</strong></p>
+<p>学生先“感觉对”，再回过头来，发现那个感觉有名字、有公式——这个顺序，比反过来强得多。<span class="math inline"><em>q</em><em>L</em><sup>2</sup>/8</span>不是黑板上的一行公式，而是我亲手让它塌过三次之后，终于理解了的东西。</p>
+</div>
+<h2 id="八个维度用游戏设计的眼光重新审视课堂">八个维度：用游戏设计的眼光重新审视课堂</h2>
+<p>下面这八个词，是我让自己以后备课时反复自问的清单。</p>
+<p><strong>① 引人入胜（Engagement）。</strong>第一印象决定一切。课堂的“第一页PPT”和游戏的“标题画面”是同一回事——别用提纲，用一个会动、会让人“哇”一声的东西开场。我们选斜拉桥做封面，因为那把扇形拉索是桥里最出片的轮廓。</p>
+<p><strong>② 胜任感（Competence）。</strong>玩家要在很早就尝到“我能行”。颜色反馈（绿→黄→红）让外行不必懂力学也知道哪要塌；“建造→试车→改”的循环要短、要能立刻重来、设计不丢。教学也一样：让学生在第一节课就<strong>亲手让一辆小车安全过桥</strong>，比讲三页弯矩公式更能留住人。</p>
+<p><strong>③ 引导性（Onboarding）。</strong>这是我们最大的教训。<strong>一次只教一个概念。</strong>别在第一关同时丢出梁高、截面、变截面、连续梁。理想的梁桥教学应该是：先只管跨越（感受下挠）→ 跨度变大、被迫加高梁（体会<span class="math inline"><em>I</em> ∝ <em>h</em><sup>3</sup></span>）→ 太长了、被迫改空心箱梁（自重下来、抗弯还在）→ 加个中支座、看弯矩减半（连续梁）。每一步只有一个新变量。</p>
+<p><strong>④ 美观性（Aesthetics）。</strong>美不是装饰，是可信度。我们统一了复古蓝图/工地的色板，用视差和“伪三维”的厚度让画面有纵深，并坚持一条原则：<strong>动效是沟通，不是炫技</strong>——分区切换时的淡入，是在告诉你“模式变了”，而不是为了动而动。</p>
+<p><strong>⑤ 故事性（Narrative）。</strong>我们把五关改成了有地气的地名（深沟寺、新世纪、火炬广场、锦绣、星海），并在每次成败后送上一句桥梁名言——从尼采“人是一座桥，而非终点”，到工程史学者波卓斯基“形式追随失败”，到杜牧“长桥卧波，未云何龙”。<strong>工程师是有浪漫的</strong>，把这份浪漫给学生看见，桥就不只是一堆杆件。</p>
+<p><strong>⑥ 挑战性（Challenge）。</strong>预算约束、移动荷载、四类桥各异的受力路径，构成了“够用但不轻松”的张力。挑战要真，但要可达。</p>
+<p><strong>⑦ 心流体验（Flow）。</strong>心流来自“挑战与能力的动态匹配+即时反馈+清晰目标”。太难则焦虑，太易则无聊。</p>
+<p><strong>⑧ 传播性（Shareability）。</strong>我们把它做成网页、单链接可分享，并且<strong>同一站点上线两个版本供对比</strong>。金句、可截图的瞬间、“你也来搭一座”的邀请，都是传播的钩子。能被转发的教学，才走得远。</p>
+<h2 id="更进一步我们自己写了有限元">更进一步：我们自己写了有限元</h2>
+<p>长期以来，结构与桥梁教学有一个挥之不去的批评：<strong>学生毕业，往往只是“会用一个软件”。</strong>会在MIDAS、SAP2000、ANSYS里建模、点“运行”、看一张五颜六色的云图——但从建模到分析之间那条内在的逻辑链，始终是个黑箱。“会用软件”，并不等于“懂结构”。</p>
+<p>这一次，SpanCraft原型尝试<strong>不调用商业有限元软件</strong>，把二维计算直接写进项目：定义节点与单元、组装整体刚度矩阵、施加边界条件、求解<span class="math inline"><em>K</em><em>U</em> = <em>F</em></span>、再做内力与变形的后处理。这个选择的价值，不在于宣称原型已经达到工程软件的可靠性，而在于让计算过程变得透明、可读、可改。</p>
+<div class="shiyu-inline">
+<p><strong>当求解器是你自己写的，“建模”就回到了力学第一性原理。</strong>它不再是“把结构画进软件”，而是直面自由度、刚度、平衡与协调这些最根本的东西。游戏里那根变色的杆件、那道下挠，背后是一套学生<strong>能完全打开、看懂、甚至动手改</strong>的计算，而不是一个只吐结果的盒子。</p>
+<p><strong>把黑箱，重新变回玻璃箱。</strong>学生看见的不是一张“结果云图”，而是结果如何从<span class="math inline"><em>K</em></span>、<span class="math inline"><em>U</em></span>、<span class="math inline"><em>F</em></span>一步步生长出来。</p>
+<p>——SpanCraft设计复盘，2026年6月</p>
+</div>
+<h2 id="斜拉桥的隐喻">斜拉桥的隐喻</h2>
+<p>斜拉桥的每一根索，都直接从桥面拉到桥塔。力不绕弯路。反馈不绕弯路。</p>
+<p><strong>学习回路的设计，就是拉索的位置。</strong></p>
+<p>游戏里的拉索是什么？是<strong>即时反馈</strong>。你动一下，桥马上告诉你行不行。你加一根杆，颜色变了。你放一辆车，桥塌了——不是考试之后才知道，是<strong>当场就知道</strong>。你改了三个地方，再放一辆车，桥站住了。你心里“啊”了一声。</p>
+<p>课堂里的拉索是什么？是<strong>每一个让学生参与判断的瞬间</strong>。不是“大家听懂了吗”——那是绕弯路的反馈。是“AI给我的答案，你觉得对吗？为什么？”——那是直接的反馈。</p>
+<p>斜拉桥的索，每根都有自己的位置，每根传递不同的力。学习回路的设计，就是决定：<strong>在哪个环节，给学生什么样的反馈，让他能调整自己的理解。</strong></p>
+<div class="shiyu-note">
+<p><span id="note:chap7" label="note:chap7"></span></p>
+<p><strong>好玩和有料，并不矛盾。它们只是需要被重新排序。</strong></p>
+<p>先让人愿意留下来，再把深度一勺一勺喂进去。这是SpanCraft教会我的东西。也是我这辈子最珍视的教学原则。</p>
+<p>从游戏的视角回看教学，我们这些“懂内容”的人，在“如何让人愿意学进去”这件事上，要学的东西非常多——引人入胜、胜任感、引导性、美观、故事、挑战、心流、传播，每一个词背后都是一门手艺。</p>
+<p>但谦卑之外，更多的是兴奋。因为我们第一次清楚地看到：好玩和有料，并不矛盾；它们只是需要被重新排序——<strong>先让人愿意留下来，再把深度一勺一勺喂进去。</strong></p>
+<p>桥的本事，是把分开的两岸连起来。也许一堂好课、一个好游戏，做的也是同一件事。</p>
+</div>
+<div class="decision-point">
+<p><span id="decision:chap7" label="decision:chap7"></span></p>
+<p><strong>这一章，我们看到了SpanCraft从V1到V2的完整设计复盘。</strong></p>
+<p>打开你的下一节课的PPT。找到第一页。删掉“课程目标”。换成一个会让学生“哇”一声的东西。</p>
+<p>不是提纲。不是目录。不是“通过本章学习，你将掌握……”</p>
+<p>是一个会动的图。一个你亲手搭的桥塌掉的视频。一个你至今没想通的问题。一个你昨天用AI生成的、漂亮到让人沉默的渲染图。</p>
+<p>就一页。然后开始讲课。</p>
+</div>
+<div class="flushright">
+<p><span> 下一章：把理论藏进手感里——让看不见的力变得可以操作。</span></p>
+</div></article>
+    <footer class="article-footer"><nav class="page-turn" aria-label="章节翻页"><a id="prev-chapter" hidden></a><a href="../index.html">全书目录</a><a id="next-chapter" hidden></a></nav><span>公开修订稿 · 2026</span></footer>
+  </main>
+</body>
+</html>

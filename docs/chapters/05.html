@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f7f4ed">
+  <title>Chapter 05｜请把手弄脏</title>
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>.reading-pane:before{height:380px;opacity:.22;filter:contrast(1.08) saturate(1.04)}@media(max-width:820px){.reading-pane:before{width:100vw;opacity:.17}}</style>
+  <script defer src="../assets/site.js"></script>
+  <script>window.MathJax={svg:{fontCache:'global'}};</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body>
+  <a class="skip" href="#article">跳到正文</a>
+  <button class="menu-button" type="button" aria-controls="book-nav" aria-expanded="false">目录</button>
+  <div class="scrim" hidden></div>
+  <aside class="book-nav" id="book-nav">
+    <a class="brand" href="../index.html"><span>请把手弄脏</span><small>AI时代的学与玩，或一座桥的哲学</small></a>
+    <nav aria-label="全书目录">
+      <details open><summary>梁桥</summary>
+        <a href="01.html">01 机器学会了搭桥</a><a href="02.html">02 为什么还愿意再试一次</a><a href="03.html">03 学了有什么用</a>
+      </details>
+      <details open><summary>拱桥</summary>
+        <a href="04.html">04 当答案走进教室</a><a href="05.html">05 排名、积分与点赞</a><a href="06.html">06 美丽的初稿</a>
+      </details>
+      <details open><summary>斜拉桥</summary>
+        <a href="07.html">07 先给魅力，再给负荷</a><a href="08.html">08 把理论藏进手感</a><a href="09.html">09 让学习发生</a>
+      </details>
+      <details open><summary>悬索桥</summary>
+        <a href="10.html">10 人的判断权</a><a href="11.html">11 教师是改稿机器吗</a><a href="12.html">12 桥不会自己存在</a>
+      </details>
+      <details open><summary>组合桥</summary>
+        <a href="13.html">13 用TRIZ重新理解教学</a><a href="14.html">14 一封邀请函</a><a href="15.html">15 请把手弄脏</a>
+      </details>
+    </nav>
+    <div class="nav-meta"><a href="https://syzhaoln-stack.github.io/projection-master/">进入投影工作台 ↗</a><br><a href="https://syzhaoln-stack.github.io/spancraft-bridge-game/">进入 SpanCraft 游戏 ↗</a><br><a href="https://github.com/syzhaoln-stack/build-a-bridge">本书 GitHub / 勘误</a></div>
+  </aside>
+  <main class="reading-pane">
+    <article id="article" class="article"><h1 id="排名积分点赞我们在设计微型制度">排名、积分、点赞：我们在设计“微型制度”</h1>
+<div class="center">
+<p><span> 拱桥的每一块石头都被两边的石头挤住。</span> <span> 如果有一块石头想偷懒——它就会掉下来。</span> <span> 制度，就是那两边的石头。</span></p>
+</div>
+<h2 id="分已经打完了而且都是最高分">“分已经打完了，而且都是最高分”</h2>
+<p>2026年6月23日，我在跟两位老师讨论我开发的AI教学平台。我讲了一段话，后来被转写成了文字：</p>
+<div class="shiyu-inline">
+<p>“以前我们在学习通里评分的时候，台上学生往台上一站，你不是可以评分了吗？分已经打完了，而且都是最高分。为啥他打多少分跟自己没关系？你再有一个是你只需要打个分嘛，写个分最省事，人就最小用力原则嘛。那只要打个分，打个满分，啪提交就完事了。”</p>
+<p>——2026年6月23日，AI教学平台讨论，录音转写</p>
+</div>
+<p>这段话描述的场景，每一个用过学习通评分功能的老师都见过。一个学生上台汇报，台下三十个学生，三十秒内全部打完分。清一色的满分。没有人真的在“评价”。所有人都在“完成”。</p>
+<p>为什么？因为<strong>打多少分，跟自己没关系。</strong></p>
+<p>这就是旧系统里评价机制的致命缺陷：评价者和被评价者之间，没有利益关联。我给你打满分，不花我一分钱。我给你打低分，你也不会知道是我打的。那为什么不打满分呢？最小用力原则。</p>
+<h2 id="他必须打这个分很公正">“他必须打这个分很公正”</h2>
+<p>然后我讲了我怎么改的：</p>
+<div class="shiyu-inline">
+<p>“但是现在我要做的是，因为你给别人打完分之后，别人马上加到积分里，这个积分一变就影响到了你自己的排名，影响了你期末的分数。所以他必须打这个分很公正。”</p>
+<p>——2026年6月23日，同一场讨论</p>
+</div>
+<p>我改了一个东西：<strong>把评价者的利益和被评价者的表现绑在一起。</strong></p>
+<p>你给别人打的分数，会影响别人的排名。别人的排名，会影响你的排名。如果你给一个很烂的作品打满分，那个人的排名会上升，你的排名会下降。如果你给一个很好的作品打低分，那个人的排名会下降——但你的排名不会因此上升，因为AI会检测你的评分是不是偏离了均值太远。</p>
+<p><strong>这不是一个评分系统。这是一个微型制度。</strong></p>
+<p>在这个制度里，“公正”不是一种道德要求，而是一种<strong>利益计算</strong>。你不需要做一个好人。你只需要做一个理性的人。而理性的人，会打公正的分。</p>
+<h2 id="ai给整理的所有学生对他的评价">“AI给整理的所有学生对他的评价”</h2>
+<p>制度里还有另一个细节：</p>
+<div class="shiyu-inline">
+<p>“30个评审团60句话。别人看到不是60句话，而是匿名的由AI整理出来的一段。AI给整理的所有学生对他的评价，整理完之后你看不出是哪位学生给他的这个东西，但一定里边你所说的话被采纳进去了。”</p>
+<p>——2026年6月23日，同一场讨论</p>
+</div>
+<p>我做了两件事：<strong>匿名化</strong>和<strong>AI聚合</strong>。</p>
+<p>匿名化，让学生敢说真话。没有人知道那句批评是谁写的，所以没有人会因为批评同学而被记恨。</p>
+<p>AI聚合，让学生的话被“听见”。三十个人写的六十句话，对一个人来说太多了。但AI把它们整理成一段流畅的反馈，那个学生就能在三十秒内读完，然后马上知道自己的问题在哪，下一版怎么改。</p>
+<p><strong>制度的目的是让反馈变得可操作。</strong></p>
+<h2 id="他排名啪一杆就冲上去了">“他排名啪一杆就冲上去了”</h2>
+<p>然后我讲了另一个设计：抢答机制。</p>
+<div class="shiyu-inline">
+<p>“第一个答完的学生能得十分，第二个答完能得九分，第三个答完得八分。咱以前课堂上最头疼的是好学生答完之后把答案啪一散，全班都知道。但是你现在没问题，你为了能够快速答完，好学生根本没工夫去管其他人。他赶紧先把自己答案提交了。”</p>
+<p>“我上课经常有那样的学生，就是因为这一轮他答的最快最好，直接他就排名啪一杆就冲上去了。就这样，让有可能性他能翻盘的。所以他才愿意参与。要不然他发现自己反正我也超不过前面了，无所谓了，我就是躺平，我不跟你参与了。”</p>
+<p>——2026年6月23日，同一场讨论</p>
+</div>
+<p>这里有三个设计原则：</p>
+<p><strong>第一，速度本身就是奖励。</strong>第一个答对的人拿10分，第二个拿9分，第三个8分——后面的人拿到的分越来越低。这个设计把“快”变成了一种优势。好学生不会再把答案分享给全班——因为分享会降低自己的排名。</p>
+<p><strong>第二，翻盘必须可能。</strong>如果排名永远不变，排在后面的人就会放弃。但一轮抢答就能让排名“啪一杆就冲上去”——这个可能性，是让所有人持续参与的动力。</p>
+<p><strong>第三，参与本身就有分。</strong>不是只有答对才得分。投票、开放式问题、甚至点“不懂”——只要参与了，AI就给你分。因为<strong>参与本身就是价值</strong>。一个沉默的课堂，比一个答错的课堂更可怕。</p>
+<div class="insight">
+<p><span id="insight:chap5" label="insight:chap5"></span></p>
+<p><strong>积分系统不是在管理学生。积分系统是在设计课堂的微观制度。</strong></p>
+<p>每一项规则——谁得分、怎么得分、得分之后会发生什么——都在塑造学生的行为。如果你奖励“正确”，学生就会追求安全。如果你奖励“快速”，学生就会追求效率。如果你奖励“参与”，学生就会追求表达。</p>
+<p>制度不是中性的。制度本身就在教东西。</p>
+</div>
+<h2 id="制度的双面性">制度的双面性</h2>
+<p>2026年6月，在教学理念综合分析中，有一段话让我反复读：</p>
+<div class="shiyu-inline">
+<p>“积分系统实际上是在设计课堂的’微型制度’。有的平台把学生给他人的评分与自己的排名、期末成绩关联，解决’人人随手满分’；点赞、评论、与教师判断一致还会产生不同积分。这非常聪明，因为它改变了参与的激励结构；也非常危险，因为学生可能开始优化积分、迎合教师或交换人情，而非追求真实判断。”</p>
+<p>——教学理念综合分析，2026年7月</p>
+</div>
+<p><strong>制度是双面的。</strong></p>
+<p>它能让沉默的课堂变活跃，也能让活跃的课堂变表演。它能让学生从不参与到参与，也能让学生从“参与”到“迎合”。它能解决“人人随手满分”，也可能制造“人人优化积分”。</p>
+<p>这不是制度的错。任何制度都有双面性。问题不是“要不要制度”，而是<strong>制度有没有被有意识地设计，以及有没有被持续地审视</strong>。</p>
+<p>在我的课上，我保留了那个反思：<strong>即使平台高度智能化，“人与人的东西”仍被认为最重要。</strong>积分是辅助，不是目的。学生迭代的过程应该由学生自己总结，而不是外包给AI。</p>
+<h2 id="拱桥的隐喻之二">拱桥的隐喻之二</h2>
+<p>拱桥的每一块石头，都被两边的石头挤住。如果有一块石头想偷懒——它就会掉下来。制度，就是那两边的石头。</p>
+<p>但制度不是越多越好。石头太密，拱桥就变成了实心的墙——没有空间，没有呼吸，没有光。制度太松，拱桥就散了——每一块石头都只为自己，整座桥就塌了。</p>
+<p><strong>好的制度，是让每个人在追求自身利益的同时，恰好做了对整体有利的事。</strong></p>
+<p>就像拱桥。每一块石头都在承受自己的重量。但因为它被两边的石头挤住了，它承受的重量，恰好帮助了整座桥站住。</p>
+<div class="shiyu-note">
+<p><span id="note:chap5" label="note:chap5"></span></p>
+<p><strong>制度是双面的。但逃避制度的设计，是更危险的。</strong></p>
+<p>很多老师不愿意设计积分系统。他们觉得“学习应该是自发的”，“积分会让学习变味”。但问题是：<strong>不做设计的课堂，也有制度。</strong>它只是隐性的——学生知道谁在认真听、谁在刷手机、谁会被老师喜欢、谁会被忽视。这些隐性的制度，比显性的积分系统更不公平，因为没有人能质疑它。</p>
+<p>把制度显性化，才是公平的开始。你可以看到规则，你可以质疑规则，你可以建议修改规则。制度变成了一件可以被讨论和迭代的东西，而不是一件“从来就是这样”的天经地义。</p>
+</div>
+<div class="decision-point">
+<p><span id="decision:chap5" label="decision:chap5"></span></p>
+<p><strong>这一章，我们看到了积分系统如何设计课堂的微型制度。</strong></p>
+<p>下一次你让学生互评的时候，不要只让他们打分。加一句话：“你认为这个作品最大的优点是什么？如果你来改，你会改哪里？”</p>
+<p>然后，把这些评语匿名汇总，用AI整理成一段话，发给那个学生。告诉他：这是三十个人帮你想的改进方向。</p>
+<p>看看他下一版会改成什么样。</p>
+</div>
+<div class="flushright">
+<p><span> 下一章：美丽的初稿——AI把“做出来”的门槛降为零，把“知道好不好”抬向无限。</span></p>
+</div></article>
+    <footer class="article-footer"><nav class="page-turn" aria-label="章节翻页"><a id="prev-chapter" hidden></a><a href="../index.html">全书目录</a><a id="next-chapter" hidden></a></nav><span>公开修订稿 · 2026</span></footer>
+  </main>
+</body>
+</html>

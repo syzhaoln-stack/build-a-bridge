@@ -22,6 +22,9 @@
 
 # Compiled PDF
 main.pdf
+build/
+output/
+tmp/
 
 # OS files
 .DS_Store
