@@ -1,69 +1,23 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="《请把手弄脏》公开修订稿：AI时代的学与玩，或一座桥的哲学。">
-  <title>请把手弄脏｜公开修订稿</title>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="《请把手弄脏》：以桥梁串联AI、教学与真实应用的教学散文。"><title>请把手弄脏｜在线阅读</title>
   <style>
-    :root{--ink:#1f2430;--muted:#6b7280;--blue:#456fc1;--paper:#fbfaf7;--line:#dedbd3;--gold:#e9c46a}
-    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Serif SC","Source Han Serif SC","Songti SC",serif;line-height:1.85}
-    a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}.wrap{width:min(940px,calc(100% - 40px));margin:auto}
-    header{min-height:92vh;display:grid;place-items:center;border-bottom:1px solid var(--line);position:relative;overflow:hidden}
-    header:before{content:"";position:absolute;width:620px;height:620px;border:1px solid #d8d3c7;border-radius:50%;top:-310px;right:-150px}
-    .hero{padding:90px 0;position:relative}.eyebrow{font:600 13px/1.2 system-ui,sans-serif;letter-spacing:.18em;color:var(--blue);text-transform:uppercase}
-    h1{font-size:clamp(48px,9vw,92px);line-height:1.04;margin:.28em 0 .2em;letter-spacing:-.04em} .subtitle{font-size:clamp(20px,3vw,31px);max-width:780px;margin:0 0 36px;color:#3e4656}
-    .lead{font-size:18px;max-width:680px;color:var(--muted)}.actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:34px}.button{display:inline-block;padding:11px 18px;border:1px solid var(--ink);border-radius:2px;font:600 14px/1.4 system-ui,sans-serif}.primary{background:var(--ink);color:white}
-    main{padding:90px 0}section{margin:0 0 90px}h2{font-size:clamp(30px,5vw,46px);line-height:1.2;margin:0 0 20px}h3{font-size:22px;margin:0 0 8px}.quote{border-left:4px solid var(--gold);padding:4px 0 4px 24px;font-size:24px;line-height:1.65;margin:45px 0}.source{font:13px/1.5 system-ui,sans-serif;color:var(--muted);margin-top:12px}
-    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.card{border-top:3px solid var(--ink);padding:20px 2px}.card .num{font:700 12px/1.2 system-ui,sans-serif;color:var(--blue);letter-spacing:.12em}.card p{color:var(--muted);margin:.5em 0 0}
-    .chapter{display:grid;grid-template-columns:74px 1fr;gap:12px;padding:18px 0;border-bottom:1px solid var(--line)}.chapter b{font:700 13px/1.5 system-ui,sans-serif;color:var(--blue)}.chapter span{font-size:19px}
-    .notice{background:#f2efe7;padding:28px 30px;border-radius:3px}.notice strong{display:block;margin-bottom:8px}footer{padding:35px 0 55px;border-top:1px solid var(--line);color:var(--muted);font:14px/1.7 system-ui,sans-serif}
-    @media(max-width:700px){header{min-height:auto}.hero{padding:75px 0}.grid{grid-template-columns:1fr}.chapter{grid-template-columns:52px 1fr}main{padding:65px 0}section{margin-bottom:65px}}
+    :root{--ink:#20231f;--muted:#6d7068;--blue:#315f91;--paper:#f7f4ed;--surface:#fffefa;--line:#dcd6c9;--gold:#bd7b29}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Serif SC","Source Han Serif SC","Songti SC",serif;line-height:1.85}a{color:inherit;text-decoration:none}.topbar{position:sticky;top:0;z-index:20;background:rgba(247,244,237,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}.topbar-inner{width:min(1120px,calc(100% - 32px));height:58px;margin:auto;display:flex;align-items:center;gap:24px}.wordmark{font-weight:900;white-space:nowrap}.part-nav{display:flex;gap:5px;overflow-x:auto;scrollbar-width:none}.part-nav a{white-space:nowrap;padding:7px 10px;border-radius:99px;color:var(--muted);font:600 13px/1 system-ui,sans-serif}.part-nav a:hover{background:#e9e3d7;color:var(--ink)}.github{margin-left:auto;color:var(--blue);font:600 13px/1 system-ui,sans-serif;white-space:nowrap}.wrap{width:min(1040px,calc(100% - 40px));margin:auto}.hero{min-height:76vh;display:flex;align-items:center;border-bottom:1px solid var(--line);position:relative;overflow:hidden}.hero:after{content:"";position:absolute;width:540px;height:540px;border:1px solid #d7d0c1;border-radius:50%;right:-220px;top:-250px}.hero-inner{padding:88px 0;position:relative;z-index:1}.eyebrow{color:var(--blue);font:700 12px/1 system-ui,sans-serif;letter-spacing:.18em}.hero h1{font-size:clamp(52px,9vw,94px);line-height:1;margin:.25em 0 .18em;letter-spacing:-.05em}.subtitle{font-size:clamp(20px,3vw,31px);color:#444a43;margin:0 0 30px}.lead{font-size:18px;color:var(--muted);max-width:700px}.start{display:inline-block;margin-top:25px;padding:12px 18px;background:var(--ink);color:#fff;font:700 14px/1.4 system-ui,sans-serif}.quote{font-size:clamp(23px,4vw,35px);line-height:1.6;max-width:850px;margin:90px 0 16px}.source{color:var(--muted);font:13px/1.5 system-ui,sans-serif}.intro{max-width:760px;margin:28px 0 95px;font-size:17px}.part{padding:76px 0;border-top:1px solid var(--line)}.part-head{display:grid;grid-template-columns:90px 1fr;gap:20px;margin-bottom:32px}.part-no{color:var(--gold);font:800 13px/1.2 system-ui,sans-serif;letter-spacing:.14em;padding-top:12px}.part h2{font-size:clamp(34px,5vw,52px);line-height:1.1;margin:0}.part-desc{color:var(--muted);margin:.55em 0 0}.chapters{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.chapter{display:block;background:var(--surface);border:1px solid var(--line);padding:23px;min-height:180px;transition:transform .16s ease,border-color .16s ease}.chapter:hover{transform:translateY(-3px);border-color:#9e9686}.chapter b{color:var(--blue);font:800 12px/1 system-ui,sans-serif;letter-spacing:.14em}.chapter h3{font-size:21px;line-height:1.45;margin:17px 0 8px}.chapter p{color:var(--muted);font-size:14px;margin:0}.notice{margin:70px 0 90px;padding:28px;border-left:4px solid var(--gold);background:#efe9dc}.notice strong{display:block;margin-bottom:7px}footer{border-top:1px solid var(--line);padding:35px 0 55px;color:var(--muted);font:13px/1.7 system-ui,sans-serif}@media(max-width:760px){.topbar-inner{gap:12px}.wordmark{font-size:14px}.github{display:none}.hero{min-height:auto}.hero-inner{padding:78px 0 70px}.hero h1{font-size:54px}.quote{margin-top:65px}.part{padding:58px 0}.part-head{grid-template-columns:1fr;gap:6px}.part-no{padding:0}.chapters{grid-template-columns:1fr}.chapter{min-height:auto}.wrap{width:calc(100% - 32px)}}
   </style>
 </head>
 <body>
-  <header>
-    <div class="wrap hero">
-      <div class="eyebrow">Public revision · July 2026</div>
-      <h1>请把手弄脏</h1>
-      <p class="subtitle">AI时代的学与玩，或一座桥的哲学</p>
-      <p class="lead">从一张画错的弯矩图开始，跟着真实课堂和学生项目，追问：当机器已经能迅速交出答案，人为什么还要亲手做一次？</p>
-      <div class="actions">
-        <a class="button primary" href="book.pdf">在线阅读 PDF</a>
-        <a class="button" href="https://github.com/syzhaoln-stack/build-a-bridge">查看源码与编辑台账</a>
-      </div>
-    </div>
-  </header>
+  <nav class="topbar" aria-label="五部分导航"><div class="topbar-inner"><a class="wordmark" href="#top">请把手弄脏</a><div class="part-nav"><a href="#beam">梁桥</a><a href="#arch">拱桥</a><a href="#cable">斜拉桥</a><a href="#suspension">悬索桥</a><a href="#composite">组合桥</a></div><a class="github" href="https://github.com/syzhaoln-stack/build-a-bridge">GitHub</a></div></nav>
+  <header class="hero" id="top"><div class="wrap hero-inner"><div class="eyebrow">PUBLIC REVISION · 2026</div><h1>请把手弄脏</h1><p class="subtitle">AI时代的学与玩，或一座桥的哲学</p><p class="lead">一组由桥引发的教学随笔：从课堂、录音与真实项目出发，一直追问桥梁、AI、教学和应用怎样在同一个现场相遇。</p><a class="start" href="chapters/01.html">从第一章开始</a></div></header>
   <main class="wrap">
-    <section>
-      <div class="quote">“你就真的得是自己会才行，要不然你也不知道 AI 做得对不对。像那个弯矩图。”<div class="source">课程结题汇报，2026 年 7 月 1 日 00:25:20</div></div>
-      <p>这不是一本 AI 工具清单，也不是桥梁工程教材。它保留课堂原声中的迟疑、失败和口语，把研究放在需要托底的地方；无法回到录音的完整故事，宁可删掉。</p>
-    </section>
-    <section>
-      <h2>三部，九章，一条路</h2>
-      <div class="grid">
-        <article class="card"><div class="num">PART 01</div><h3>答案之后</h3><p>AI 已经能生成答案，人为什么还要学？</p></article>
-        <article class="card"><div class="num">PART 02</div><h3>把手弄脏</h3><p>跟着一座桥经历做、错、改与懂。</p></article>
-        <article class="card"><div class="num">PART 03</div><h3>让学习发生</h3><p>教师怎样把作品变成学习回路。</p></article>
-      </div>
-    </section>
-    <section>
-      <h2>目录</h2>
-      <div class="chapter"><b>01</b><span>机器能生成答案，课堂要证明什么</span></div>
-      <div class="chapter"><b>02</b><span>为什么学生愿意再试一次</span></div>
-      <div class="chapter"><b>03</b><span>答案变便宜之后，什么更值钱</span></div>
-      <div class="chapter"><b>04</b><span>一张画错的弯矩图</span></div>
-      <div class="chapter"><b>05</b><span>美丽的初稿</span></div>
-      <div class="chapter"><b>06</b><span>把看不见的力变成可以操作的东西</span></div>
-      <div class="chapter"><b>07</b><span>最短的学习回路</span></div>
-      <div class="chapter"><b>08</b><span>教师不做改稿机器</span></div>
-      <div class="chapter"><b>09</b><span>从下一节课开始</span></div>
-    </section>
-    <section class="notice">
-      <strong>这是公开修订稿，不是已经完成的研究结论。</strong>
-      书中的课堂观察用于提出设计问题，同行评审研究用于说明证据边界。仓库同时公开材料地图、事实核查台账、术语表和 LaTeX 构建脚本，欢迎提交可定位的勘误。
-    </section>
-  </main>
-  <footer><div class="wrap">ColdCat · 大连交通大学桥梁工程教师<br>文字 CC BY-NC-SA 4.0 · 代码 MIT</div></footer>
-</body>
-</html>
+    <div class="quote">“你就真的得是自己会才行，要不然你也不知道 AI 做得对不对。像那个弯矩图。”</div><div class="source">学生项目结题汇报，2026年7月1日 00:25:20</div>
+    <p class="intro">这不是桥梁知识分类教材，也不是AI工具清单。梁桥、拱桥、斜拉桥、悬索桥与组合桥，是五种思考姿态。桥梁负责把问题带进来，课堂现场让问题落地，AI不断制造新的缝隙，而教学设计尝试在两岸之间搭出一条可以走的路。</p>
+    <section class="part" id="beam"><div class="part-head"><div class="part-no">PART 01</div><div><h2>梁桥</h2><p class="part-desc">最直接的跨越：当答案越来越便宜，人为什么还要学？</p></div></div><div class="chapters"><a class="chapter" href="chapters/01.html"><b>01</b><h3>机器学会了搭桥，但它不知道自己在搭桥</h3><p>从两种“学习”开始。</p></a><a class="chapter" href="chapters/02.html"><b>02</b><h3>为什么孩子会蹲在沙坑里搭三个小时的桥</h3><p>失败、反馈与再试一次。</p></a><a class="chapter" href="chapters/03.html"><b>03</b><h3>“这个学了有什么用？”</h3><p>效率如何让意义失声。</p></a></div></section>
+    <section class="part" id="arch"><div class="part-head"><div class="part-no">PART 02</div><div><h2>拱桥</h2><p class="part-desc">压力创造强度：新工具如何撞击旧课堂。</p></div></div><div class="chapters"><a class="chapter" href="chapters/04.html"><b>04</b><h3>当学生带着ChatGPT的答案走进教室</h3><p>讲解变便宜以后，什么变贵了？</p></a><a class="chapter" href="chapters/05.html"><b>05</b><h3>排名、积分、点赞</h3><p>课堂也在设计一种微型制度。</p></a><a class="chapter" href="chapters/06.html"><b>06</b><h3>美丽的初稿</h3><p>做出来，不等于做对了。</p></a></div></section>
+    <section class="part" id="cable"><div class="part-head"><div class="part-no">PART 03</div><div><h2>斜拉桥</h2><p class="part-desc">每一根索都直接传力：怎样把反馈与行动接起来。</p></div></div><div class="chapters"><a class="chapter" href="chapters/07.html"><b>07</b><h3>先给魅力，再给负荷</h3><p>一次教学游戏的设计复盘。</p></a><a class="chapter" href="chapters/08.html"><b>08</b><h3>把理论藏进手感里</h3><p>让看不见的力成为可操作对象。</p></a><a class="chapter" href="chapters/09.html"><b>09</b><h3>从“把知识讲清楚”到“让学习发生”</h3><p>六根索，六个课堂动作。</p></a></div></section>
+    <section class="part" id="suspension"><div class="part-head"><div class="part-no">PART 04</div><div><h2>悬索桥</h2><p class="part-desc">跨越越远，越要追问：人的判断靠什么锚住？</p></div></div><div class="chapters"><a class="chapter" href="chapters/10.html"><b>10</b><h3>人的判断权</h3><p>AI越强，人越不能退出。</p></a><a class="chapter" href="chapters/11.html"><b>11</b><h3>教师是“改稿机器”吗？</h3><p>哪些反馈必须留给人。</p></a><a class="chapter" href="chapters/12.html"><b>12</b><h3>桥不会自己存在</h3><p>关于责任、签名与专业底线。</p></a></div></section>
+    <section class="part" id="composite"><div class="part-head"><div class="part-no">PART 05</div><div><h2>组合桥</h2><p class="part-desc">没有一种桥型解决所有问题：把方法带回真实应用。</p></div></div><div class="chapters"><a class="chapter" href="chapters/13.html"><b>13</b><h3>用TRIZ重新理解教学</h3><p>把矛盾当作设计入口，而不是口号。</p></a><a class="chapter" href="chapters/14.html"><b>14</b><h3>效率至上世界里，一封写给孩子的邀请函</h3><p>魅力先于说教。</p></a><a class="chapter" href="chapters/15.html"><b>15</b><h3>请把手弄脏</h3><p>不是拒绝AI，而是重新进入行动。</p></a></div></section>
+    <div class="notice"><strong>这是一部公开修订中的教学散文。</strong>课堂原声、作者判断和研究证据将分开标注。无法回到录音、项目或公开来源的完整故事会删除或改写为明确的设想。</div>
+  </main><footer><div class="wrap">ColdCat · 大连交通大学桥梁工程教师<br>文字 CC BY-NC-SA 4.0 · 代码 MIT</div></footer>
+</body></html>
